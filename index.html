@@ -3,28 +3,34 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Labelforge — Bespoke ML datasets, agents, and models</title>
-<meta name="description" content="Labelforge builds custom labeled datasets, intelligent agents, and cutting-edge ML models — accelerating insights and reducing time-to-value.">
+<title>Labelforge — Shared R&amp;D for frontier AI</title>
+<meta name="description" content="Labelforge independently develops reusable post-training environments, datasets, graders, evaluation systems, and research software for frontier AI teams.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Labelforge — Bespoke ML Solutions">
-<meta property="og:description" content="Custom labeled datasets, intelligent agents, and cutting-edge models. Accelerate insights, reduce time-to-value.">
+<meta property="og:title" content="Labelforge — Shared R&amp;D for frontier AI">
+<meta property="og:description" content="Outsource the R&amp;D everyone needs. Labelforge builds reusable post-training capabilities for frontier AI teams.">
 <meta property="og:url" content="https://labelforge.io/">
-<meta property="og:image" content="https://labelforge.io/assets/og-image.jpg">
+<meta property="og:image" content="https://labelforge.io/assets/og-rd.png">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Labelforge — Shared R&amp;D for frontier AI">
+<meta name="twitter:description" content="Independent research programs for environments, data, graders, evals, and the software behind them.">
+<meta name="twitter:image" content="https://labelforge.io/assets/og-rd.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
 :root{
-  --canvas:#EDF0F5;
+  --canvas:#F3F5F2;
   --panel:#FFFFFF;
-  --ink:#0D1B2E;
-  --muted:#51607A;
-  --line:#C7D0DE;
-  --magenta:#D6336C;
-  --blue:#1F7ACC;
-  --chip-bg:#0D1B2E;
-  --chip-ink:#EDF0F5;
+  --ink:#0A1720;
+  --muted:#51616B;
+  --line:#CAD2CE;
+  --lime:#B6F36B;
+  --aqua:#5DE3D0;
+  --blue:#175CD3;
+  --deep:#071219;
+  --deep-2:#0D2029;
+  --paper:#F8FAF7;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -32,360 +38,588 @@ body{
   font-family:"Instrument Sans",system-ui,sans-serif;
   background:var(--canvas);
   color:var(--ink);
-  line-height:1.6;
-  font-size:1.0625rem;
+  line-height:1.55;
+  font-size:1.03rem;
+  -webkit-font-smoothing:antialiased;
 }
-img{max-width:100%;height:auto;display:block}
-a{color:var(--blue)}
-::selection{background:var(--magenta);color:#fff}
-
-.wrap{max-width:72rem;margin:0 auto;padding:0 1.5rem}
-
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.38;
+  background-image:
+    linear-gradient(rgba(10,23,32,.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(10,23,32,.035) 1px,transparent 1px);
+  background-size:32px 32px;
+  mask-image:linear-gradient(to bottom,#000 0,transparent 54rem);
+  z-index:-1;
+}
+a{color:inherit}
+::selection{background:var(--lime);color:var(--deep)}
+.wrap{max-width:76rem;margin:0 auto;padding:0 1.5rem}
+.mono{font-family:"IBM Plex Mono",monospace}
 h1,h2,h3{
   font-family:"Archivo",system-ui,sans-serif;
-  font-stretch:118%;
-  line-height:1.08;
-  letter-spacing:-0.015em;
+  font-stretch:116%;
+  line-height:1.02;
+  letter-spacing:-.025em;
 }
-h1{font-weight:850;font-size:clamp(2.4rem,5.4vw,4.1rem)}
-h2{font-weight:800;font-size:clamp(1.7rem,3.4vw,2.5rem);letter-spacing:-0.01em}
-h3{font-weight:700;font-size:1.14rem;font-stretch:108%}
+h1{font-size:clamp(3.15rem,7vw,6.7rem);font-weight:860;max-width:12ch}
+h2{font-size:clamp(2rem,4vw,3.7rem);font-weight:820;max-width:17ch}
+h3{font-size:1.18rem;font-weight:760;line-height:1.15}
+p{color:var(--muted)}
 
-.mono{font-family:"IBM Plex Mono",monospace}
-
-/* ---------- annotation chips: the signature device ---------- */
-.chip{
-  font-family:"IBM Plex Mono",monospace;
-  font-size:0.72rem;
-  font-weight:500;
-  letter-spacing:0.02em;
-  background:var(--chip-bg);
-  color:var(--chip-ink);
-  padding:0.22rem 0.55rem;
-  border-radius:3px;
+.eyebrow{
   display:inline-flex;
   align-items:center;
-  gap:0.45rem;
-  width:fit-content;
+  gap:.55rem;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem;
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
 }
-.chip::before{
+.eyebrow::before{
   content:"";
-  width:0.55rem;height:0.55rem;
-  border-radius:2px;
-  background:var(--magenta);
-  flex:none;
+  width:.62rem;
+  height:.62rem;
+  border-radius:50%;
+  background:var(--lime);
+  box-shadow:0 0 0 4px rgba(182,243,107,.17);
 }
-.chip.b::before{background:var(--blue)}
-
-/* corner-bracketed bounding box around imagery */
-.bbox{position:relative;padding:1.1rem}
-.bbox img{border-radius:4px}
-.bbox::before,.bbox::after,
-.bbox .corner::before,.bbox .corner::after{
-  content:"";position:absolute;width:1.4rem;height:1.4rem;
-  border:0 solid var(--ink);
+.eyebrow.dark::before{background:var(--aqua);box-shadow:0 0 0 4px rgba(93,227,208,.14)}
+.section-num{
+  font-family:"IBM Plex Mono",monospace;
+  color:var(--blue);
+  font-size:.75rem;
+  letter-spacing:.06em;
 }
-.bbox::before{top:0;left:0;border-top-width:3px;border-left-width:3px}
-.bbox::after{top:0;right:0;border-top-width:3px;border-right-width:3px}
-.bbox .corner::before{bottom:0;left:0;border-bottom-width:3px;border-left-width:3px}
-.bbox .corner::after{bottom:0;right:0;border-bottom-width:3px;border-right-width:3px}
-.bbox .tag{position:absolute;top:-0.72rem;left:1.1rem}
 
-/* ---------- header ---------- */
 header{
-  border-bottom:1px solid var(--line);
-  background:color-mix(in srgb,var(--canvas) 88%,#fff);
-  position:sticky;top:0;z-index:10;
-  backdrop-filter:blur(6px);
+  position:sticky;
+  top:0;
+  z-index:20;
+  border-bottom:1px solid rgba(202,210,206,.85);
+  background:rgba(243,245,242,.88);
+  backdrop-filter:blur(12px);
 }
-.nav{display:flex;align-items:center;gap:1.6rem;padding:0.85rem 1.5rem;max-width:72rem;margin:0 auto}
+.nav{
+  min-height:4.25rem;
+  max-width:76rem;
+  margin:0 auto;
+  padding:0 1.5rem;
+  display:flex;
+  align-items:center;
+  gap:1.65rem;
+}
 .wordmark{
-  font-family:"Archivo",sans-serif;font-stretch:120%;font-weight:850;
-  font-size:1.18rem;letter-spacing:-0.01em;color:var(--ink);
-  text-decoration:none;display:flex;align-items:center;gap:0.5rem;margin-right:auto;
+  display:flex;
+  align-items:center;
+  gap:.65rem;
+  margin-right:auto;
+  font-family:"Archivo",sans-serif;
+  font-stretch:120%;
+  font-weight:850;
+  text-decoration:none;
+  letter-spacing:-.02em;
 }
-.wordmark svg{flex:none}
-.nav a.link{color:var(--muted);text-decoration:none;font-size:0.95rem;font-weight:500}
-.nav a.link:hover{color:var(--ink)}
-@media(max-width:44rem){.nav a.link{display:none}}
-
-.btn{
-  display:inline-block;
-  font-family:"Archivo",sans-serif;font-stretch:110%;font-weight:700;
-  font-size:0.98rem;
-  background:var(--magenta);color:#fff;text-decoration:none;
-  padding:0.72rem 1.35rem;border-radius:4px;
-  transition:background .15s;
+.mark{
+  width:1.12rem;
+  height:1.12rem;
+  border:2px solid var(--ink);
+  position:relative;
+  transform:rotate(45deg);
 }
-.btn:hover{background:#B92A5C}
-.btn.small{padding:0.5rem 1rem;font-size:0.9rem}
-:is(a,button):focus-visible{outline:3px solid var(--blue);outline-offset:2px}
-
-/* ---------- hero ---------- */
-.hero{padding:4.5rem 0 5rem}
-.hero .wrap{display:grid;grid-template-columns:1.15fr 0.85fr;gap:3.5rem;align-items:center}
-@media(max-width:56rem){.hero .wrap{grid-template-columns:1fr}.hero{padding:3rem 0}}
-.hero .kicker{margin-bottom:1.3rem}
-.hero p.lede{font-size:1.22rem;color:var(--muted);margin:1.4rem 0 2.1rem;max-width:34rem}
-.hero .accent{color:var(--magenta)}
-@media(prefers-reduced-motion:no-preference){
-  .hero .rise{animation:rise .6s ease-out both}
-  .hero .rise.d1{animation-delay:.08s}
-  .hero .rise.d2{animation-delay:.16s}
-  @keyframes rise{from{opacity:0;transform:translateY(0.7rem)}to{opacity:1;transform:none}}
+.mark::after{
+  content:"";
+  position:absolute;
+  inset:3px;
+  background:var(--lime);
 }
+.nav-link{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:.91rem;
+  font-weight:550;
+}
+.nav-link:hover{color:var(--ink)}
+.button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:.55rem;
+  min-height:3rem;
+  padding:.72rem 1.15rem;
+  border:1px solid var(--ink);
+  border-radius:3px;
+  background:var(--ink);
+  color:#fff;
+  font-family:"Archivo",sans-serif;
+  font-stretch:108%;
+  font-weight:720;
+  font-size:.93rem;
+  line-height:1;
+  text-decoration:none;
+  transition:transform .15s ease,background .15s ease;
+}
+.button:hover{transform:translateY(-2px);background:var(--blue);border-color:var(--blue)}
+.button.secondary{background:transparent;color:var(--ink)}
+.button.secondary:hover{background:#fff;border-color:var(--ink)}
+.button.light{background:var(--lime);color:var(--deep);border-color:var(--lime)}
+.button.light:hover{background:#fff;border-color:#fff}
+.button.small{min-height:2.45rem;padding:.55rem .9rem;font-size:.84rem}
+:is(a,button):focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 
-/* ---------- sections ---------- */
-section{padding:4.2rem 0;scroll-margin-top:3.5rem}
-section .head{max-width:42rem;margin-bottom:2.6rem}
-section .head .chip{margin-bottom:1rem}
-section .head p{color:var(--muted);margin-top:0.8rem}
-.alt{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.hero{padding:5.7rem 0 4.5rem}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(20rem,.75fr);
+  gap:4.5rem;
+  align-items:end;
+}
+.hero .eyebrow{margin-bottom:1.6rem}
+.hero h1 .accent{
+  text-decoration:underline;
+  text-decoration-thickness:.1em;
+  text-decoration-color:var(--lime);
+  text-underline-offset:.08em;
+}
+.hero-lede{
+  max-width:42rem;
+  margin:1.7rem 0 2rem;
+  font-size:clamp(1.15rem,2vw,1.4rem);
+  line-height:1.46;
+}
+.hero-actions{display:flex;gap:.8rem;flex-wrap:wrap}
+.manifest{
+  background:var(--deep);
+  color:#fff;
+  border:1px solid #203843;
+  border-radius:5px;
+  padding:1.3rem;
+  box-shadow:12px 12px 0 rgba(23,92,211,.12);
+}
+.manifest-head{
+  display:flex;
+  justify-content:space-between;
+  gap:1rem;
+  padding-bottom:1rem;
+  margin-bottom:.25rem;
+  border-bottom:1px solid #27404B;
+  color:#AABBC3;
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.7rem;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+.status{color:var(--lime)}
+.manifest ol{list-style:none}
+.manifest li{
+  display:grid;
+  grid-template-columns:2.2rem 1fr;
+  gap:.8rem;
+  padding:1rem .1rem;
+  border-bottom:1px solid #203640;
+}
+.manifest li:last-child{border-bottom:0}
+.manifest .step{
+  color:var(--aqua);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.76rem;
+}
+.manifest strong{display:block;font-size:.94rem;margin-bottom:.18rem}
+.manifest p{color:#91A6B0;font-size:.84rem;line-height:1.42}
 
-.grid{display:grid;gap:1.4rem}
-.grid.c2{grid-template-columns:repeat(2,1fr)}
-.grid.c3{grid-template-columns:repeat(3,1fr)}
-@media(max-width:56rem){.grid.c2,.grid.c3{grid-template-columns:1fr}}
+.signal-strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--panel)}
+.signal-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.signal{
+  padding:1.35rem 1.5rem;
+  border-right:1px solid var(--line);
+}
+.signal:first-child{padding-left:0}
+.signal:last-child{border-right:0}
+.signal strong{display:block;font-family:"Archivo",sans-serif;font-stretch:110%;font-size:1rem}
+.signal span{font-family:"IBM Plex Mono",monospace;color:var(--muted);font-size:.72rem}
 
-.card{
-  background:var(--panel);
+section{padding:5.5rem 0;scroll-margin-top:4rem}
+.section-head{
+  display:grid;
+  grid-template-columns:.72fr 1.28fr;
+  gap:2.5rem;
+  margin-bottom:3rem;
+  align-items:start;
+}
+.section-intro{max-width:38rem;font-size:1.15rem;line-height:1.55}
+.section-label{display:flex;gap:.9rem;align-items:center;padding-top:.35rem}
+.dark-section{background:var(--deep);color:#fff}
+.dark-section p{color:#9FB1B9}
+.dark-section .section-num{color:var(--aqua)}
+
+.process-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);background:var(--panel)}
+.process-card{padding:2rem;border-right:1px solid var(--line);min-height:17rem}
+.process-card:last-child{border-right:0}
+.process-card .code{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.72rem;
+  color:var(--blue);
+  margin-bottom:4.2rem;
+}
+.process-card h3{font-size:1.38rem;margin-bottom:.65rem}
+.process-card p{font-size:.96rem}
+
+.capability-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.capability{
+  border:1px solid #27404B;
+  padding:1.6rem;
+  background:var(--deep-2);
+  min-height:13rem;
+}
+.capability-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:2.8rem}
+.capability .tag{
+  font-family:"IBM Plex Mono",monospace;
+  color:var(--aqua);
+  font-size:.69rem;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.capability .dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--lime)}
+.capability h3{margin-bottom:.55rem}
+.capability p{font-size:.94rem}
+
+.package{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:4rem;align-items:start}
+.package-copy{position:sticky;top:7rem}
+.package-copy h2{margin:.75rem 0 1rem}
+.package-copy p{font-size:1.1rem}
+.deliverables{border-top:1px solid var(--line)}
+.deliverable{
+  display:grid;
+  grid-template-columns:3rem 1fr;
+  gap:1rem;
+  padding:1.35rem 0;
+  border-bottom:1px solid var(--line);
+}
+.deliverable .n{
+  font-family:"IBM Plex Mono",monospace;
+  color:var(--blue);
+  font-size:.72rem;
+  padding-top:.18rem;
+}
+.deliverable strong{display:block;margin-bottom:.2rem}
+.deliverable p{font-size:.93rem}
+.cloud-band{
+  margin-top:2rem;
+  padding:1.25rem;
+  border:1px solid var(--ink);
+  background:var(--lime);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:1.5rem;
+}
+.cloud-band strong{font-family:"Archivo",sans-serif;font-stretch:112%;font-size:1.08rem}
+.cloud-band span{font-family:"IBM Plex Mono",monospace;font-size:.7rem;text-align:right}
+
+.research-card{
+  border:1px solid #27404B;
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(19rem,.82fr);
+  background:var(--deep-2);
+}
+.research-main{padding:2.3rem}
+.research-main .eyebrow{margin-bottom:1.2rem}
+.research-main h3{font-size:clamp(1.8rem,3vw,2.8rem);max-width:18ch;margin-bottom:1rem}
+.research-main>p{font-size:1.05rem;max-width:40rem}
+.research-aside{padding:2.3rem;border-left:1px solid #27404B}
+.research-aside h3{font-size:.85rem;font-family:"IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--aqua);margin-bottom:1rem}
+.research-aside ul{list-style:none;display:grid;gap:.8rem}
+.research-aside li{display:flex;gap:.65rem;color:#D9E2E5;font-size:.93rem}
+.research-aside li::before{content:"↳";color:var(--lime);font-family:"IBM Plex Mono",monospace}
+
+.proof-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,.72fr);gap:1rem}
+.proof-card{border:1px solid var(--line);background:var(--panel);padding:2rem}
+.proof-card h2{font-size:clamp(1.8rem,3.3vw,3rem);margin:.9rem 0 1.1rem}
+.proof-card>p{font-size:1.08rem;max-width:43rem}
+.proof-list{display:grid;grid-template-columns:repeat(2,1fr);gap:.8rem;margin-top:2rem}
+.proof-item{border-top:1px solid var(--line);padding-top:.85rem;font-size:.9rem;color:var(--muted)}
+.human-card{
   border:1px solid var(--line);
-  border-radius:6px;
-  padding:1.7rem;
-  transition:border-color .15s, box-shadow .15s;
+  background:var(--paper);
+  padding:2rem;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:23rem;
 }
-.alt .card{background:var(--canvas)}
-.card:hover{border-color:var(--ink);box-shadow:0 2px 0 0 var(--ink)}
-.card .chip{margin-bottom:1.1rem}
-.card h3{margin-bottom:0.55rem}
-.card p{color:var(--muted);font-size:1rem}
+.human-card img{width:13rem;max-width:72%;height:auto}
+.human-card p{font-size:.93rem;margin-top:1.2rem}
+.text-link{font-weight:650;text-underline-offset:.18em}
 
-.split{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
-@media(max-width:56rem){.split{grid-template-columns:1fr}}
-.split .stack{display:grid;gap:1.4rem}
+.cta{padding:6rem 0;background:var(--blue);color:#fff}
+.cta-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(18rem,.75fr);gap:4rem;align-items:end}
+.cta h2{font-size:clamp(2.5rem,5vw,5rem);max-width:13ch;margin:.9rem 0 1.2rem}
+.cta p{color:#DDE7FF;max-width:39rem;font-size:1.13rem}
+.cta-aside{border-left:1px solid rgba(255,255,255,.3);padding-left:2rem}
+.cta-aside p{font-size:.9rem;margin-bottom:1.2rem}
+.cta-aside .button{width:100%}
 
-/* ---------- trusted ---------- */
-.trusted-logo{
-  background:var(--panel);border:1px solid var(--line);border-radius:6px;
-  padding:2.2rem 2.6rem;display:flex;align-items:center;justify-content:center;
+footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
+.footer-grid{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.88rem}
+.footer-grid a{text-underline-offset:.2em}
+
+@media(max-width:62rem){
+  .hero-grid,.package,.research-card,.proof-grid,.cta-grid{grid-template-columns:1fr}
+  .hero{padding-top:4rem}
+  .manifest{max-width:40rem}
+  .section-head{grid-template-columns:1fr;gap:1rem}
+  .process-grid{grid-template-columns:1fr}
+  .process-card{border-right:0;border-bottom:1px solid var(--line);min-height:auto}
+  .process-card:last-child{border-bottom:0}
+  .process-card .code{margin-bottom:2rem}
+  .package-copy{position:static}
+  .research-aside{border-left:0;border-top:1px solid #27404B}
+  .cta-aside{border-left:0;border-top:1px solid rgba(255,255,255,.3);padding:1.5rem 0 0}
 }
-.trusted-logo img{width:15rem}
-
-/* ---------- CTA ---------- */
-.cta{background:var(--ink);color:var(--canvas);padding:5.5rem 0}
-.cta h2{color:#fff;max-width:38rem}
-.cta p{color:#9FB0C8;margin:1.2rem 0 2.2rem;max-width:34rem}
-.cta .chip{background:var(--canvas);color:var(--ink)}
-.cta a.mail{color:#9FB0C8;font-size:0.98rem}
-
-footer{padding:2.2rem 0;color:var(--muted);font-size:0.9rem}
-footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
-footer a{color:var(--muted)}
+@media(max-width:44rem){
+  .wrap{padding:0 1rem}
+  .nav{padding:0 1rem}
+  .nav-link{display:none}
+  .nav .button{display:none}
+  h1{font-size:clamp(2.8rem,15vw,4.6rem)}
+  .hero{padding:3rem 0}
+  .hero-grid{gap:2.5rem}
+  .hero-actions{display:grid}
+  .signal-grid{grid-template-columns:1fr}
+  .signal{border-right:0;border-bottom:1px solid var(--line);padding-left:0}
+  .signal:last-child{border-bottom:0}
+  section{padding:4rem 0}
+  .capability-grid,.proof-list{grid-template-columns:1fr}
+  .cloud-band{align-items:flex-start;flex-direction:column}
+  .cloud-band span{text-align:left}
+  .research-main,.research-aside,.proof-card,.human-card{padding:1.4rem}
+}
+@media(prefers-reduced-motion:no-preference){
+  .hero-copy>*{animation:rise .55s ease-out both}
+  .hero-copy>*:nth-child(2){animation-delay:.06s}
+  .hero-copy>*:nth-child(3){animation-delay:.12s}
+  .hero-copy>*:nth-child(4){animation-delay:.18s}
+  .manifest{animation:rise .6s .12s ease-out both}
+  @keyframes rise{from{opacity:0;transform:translateY(.65rem)}to{opacity:1;transform:none}}
+}
 </style>
 </head>
 <body>
 
 <header>
-  <nav class="nav" aria-label="Main">
-    <a class="wordmark" href="#">
-      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="3" fill="none" stroke="#D6336C" stroke-width="3"/><rect x="6" y="6" width="8" height="8" rx="1.5" fill="#1F7ACC"/></svg>
-      Labelforge
-    </a>
-    <a class="link" href="#datasets">Datasets</a>
-    <a class="link" href="#agents">Agents</a>
-    <a class="link" href="#models">Models</a>
-    <a class="link" href="#velocity">Velocity</a>
-    <a class="btn small" href="mailto:sales@labelforge.io">Request a consultation</a>
+  <nav class="nav" aria-label="Main navigation">
+    <a class="wordmark" href="#top"><span class="mark" aria-hidden="true"></span>Labelforge</a>
+    <a class="nav-link" href="#model">Research model</a>
+    <a class="nav-link" href="#capabilities">Capabilities</a>
+    <a class="nav-link" href="#proof">Proof</a>
+    <a class="button small" href="mailto:research@labelforge.io?subject=Capability%20discovery">Share a research gap</a>
   </nav>
 </header>
 
-<main>
-
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <span class="chip kicker rise">class: bespoke_ml · conf 0.99</span>
-      <h1 class="rise d1">Unleashing the power of <span class="accent">bespoke ML</span> solutions</h1>
-      <p class="lede rise d2">Transform your ML projects with Labelforge's custom solutions, accelerating insights and reducing time-to-value.</p>
-      <a class="btn rise d2" href="mailto:sales@labelforge.io">Request a consultation</a>
-    </div>
-    <div class="bbox">
-      <span class="corner"></span>
-      <span class="chip tag b">class: launch · conf 0.98</span>
-      <img src="assets/hero-rocket.webp" width="1152" height="864" alt="Stylized illustration of a rocket launching toward Earth orbit" fetchpriority="high">
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="workflow">
-  <div class="wrap">
-    <div class="head">
-      <span class="chip">label: workflow</span>
-      <h2>Streamline your ML workflow</h2>
-    </div>
-    <div class="grid c2">
-      <div class="card">
-        <span class="chip">label: datasets</span>
-        <h3>Bespoke labeled datasets</h3>
-        <p>From image annotation to text classification, we deliver tailored datasets that fit your unique requirements.</p>
-      </div>
-      <div class="card">
-        <span class="chip b">label: agents</span>
-        <h3>Intelligent agents</h3>
-        <p>Our agents power simulations, driving realistic interactions and boosting your model's accuracy.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="datasets">
-  <div class="wrap">
-    <div class="head">
-      <span class="chip">label: datasets</span>
-      <h2>Bespoke labeled datasets, tailored for your needs</h2>
-    </div>
-    <div class="grid c3">
-      <div class="card">
-        <span class="chip">tag: quality</span>
-        <h3>High-quality annotations</h3>
-        <p>Our meticulous labeling ensures your models are trained on accurate and reliable data.</p>
-      </div>
-      <div class="card">
-        <span class="chip">tag: domain</span>
-        <h3>Domain expertise</h3>
-        <p>Leveraging industry-specific knowledge, we deliver datasets that are relevant and insightful.</p>
-      </div>
-      <div class="card">
-        <span class="chip">tag: scale</span>
-        <h3>Scalable solutions</h3>
-        <p>We handle projects of any size, ensuring your data is always ready for your next big step.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="agents">
-  <div class="wrap split">
-    <div>
-      <div class="head" style="margin-bottom:1.8rem">
-        <span class="chip b">label: agents</span>
-        <h2>Intelligent agents: supercharge your simulations</h2>
-      </div>
-      <div class="stack">
-        <div class="card">
-          <h3>Realistic interactions</h3>
-          <p>Our agents mimic real-world behavior, allowing you to test and refine your models in dynamic environments.</p>
-        </div>
-        <div class="card">
-          <h3>Enhanced data collection</h3>
-          <p>Agents gather valuable data during simulations, improving model performance and understanding.</p>
-        </div>
-        <div class="card">
-          <h3>Accelerated training</h3>
-          <p>By simulating complex scenarios, our agents speed up model training and reduce time-to-value.</p>
+<main id="top">
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Independent R&amp;D · Frontier AI</span>
+        <h1>Outsource the R&amp;D <span class="accent">everyone needs.</span></h1>
+        <p class="hero-lede">Labelforge identifies shared bottlenecks across frontier-model teams and independently develops the environments, datasets, graders, and software required to solve them.</p>
+        <div class="hero-actions">
+          <a class="button" href="mailto:research@labelforge.io?subject=Capability%20discovery">Join capability discovery <span aria-hidden="true">→</span></a>
+          <a class="button secondary" href="#model">How programs work</a>
         </div>
       </div>
+      <aside class="manifest" aria-label="Research program lifecycle">
+        <div class="manifest-head"><span>program.lifecycle</span><span class="status">independent</span></div>
+        <ol>
+          <li><span class="step">01</span><div><strong>Discover</strong><p>Confidential conversations surface recurring research bottlenecks.</p></div></li>
+          <li><span class="step">02</span><div><strong>Select</strong><p>We choose a general capability with value across multiple labs.</p></div></li>
+          <li><span class="step">03</span><div><strong>Build</strong><p>Labelforge funds, operates, and validates the research program.</p></div></li>
+          <li><span class="step">04</span><div><strong>Deploy</strong><p>Completed R&amp;D integrates into each lab’s preferred stack.</p></div></li>
+        </ol>
+      </aside>
     </div>
-    <div class="bbox">
-      <span class="corner"></span>
-      <span class="chip tag b">class: simulation · conf 0.97</span>
-      <img src="assets/agents-network.webp" width="864" height="1152" alt="Abstract network of glowing nodes radiating connections" loading="lazy">
+  </section>
+
+  <div class="signal-strip" aria-label="Program advantages">
+    <div class="wrap signal-grid">
+      <div class="signal"><strong>Shared research burden</strong><span>stop rebuilding the same capability</span></div>
+      <div class="signal"><strong>Complete execution layer</strong><span>software · operations · compute</span></div>
+      <div class="signal"><strong>Infrastructure neutral</strong><span>our cloud · your cloud · controlled stack</span></div>
     </div>
   </div>
-</section>
 
-<section id="models">
-  <div class="wrap">
-    <div class="head">
-      <span class="chip">label: models</span>
-      <h2>Cutting-edge models: accelerate your insights</h2>
-    </div>
-    <div class="grid c3">
-      <div class="card">
-        <span class="chip">tag: dl</span>
-        <h3>Deep learning</h3>
-        <p>Harness the power of neural networks to unlock complex patterns and make accurate predictions.</p>
-      </div>
-      <div class="card">
-        <span class="chip">tag: nlp</span>
-        <h3>Natural language processing</h3>
-        <p>Develop models that understand and interact with human language, enabling automated tasks and deeper insights.</p>
-      </div>
-      <div class="card">
-        <span class="chip">tag: cv</span>
-        <h3>Computer vision</h3>
-        <p>Empower your models to see and interpret images, enabling applications in robotics, healthcare, and more.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="alt" id="velocity">
-  <div class="wrap">
-    <div class="head">
-      <span class="chip b">label: velocity</span>
-      <h2>Unparalleled velocity: reduce time-to-value</h2>
-    </div>
-    <div class="grid c3">
-      <div class="card">
-        <span class="chip b">tag: prototype</span>
-        <h3>Rapid prototyping</h3>
-        <p>Our agile approach helps you get your models up and running quickly, enabling rapid iteration and experimentation.</p>
-      </div>
-      <div class="card">
-        <span class="chip b">tag: process</span>
-        <h3>Streamlined processes</h3>
-        <p>We optimize your workflow, minimizing delays and maximizing efficiency throughout your ML journey.</p>
-      </div>
-      <div class="card">
-        <span class="chip b">tag: support</span>
-        <h3>Expert support</h3>
-        <p>Our dedicated team provides guidance and support every step of the way, ensuring a smooth and successful implementation.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="trusted">
-  <div class="wrap split">
-    <div>
-      <div class="head" style="margin-bottom:1.8rem">
-        <span class="chip">label: expertise</span>
-        <h2>Proven expertise, trusted by industry leaders</h2>
-      </div>
-      <div class="stack">
-        <div class="card">
-          <h3>Industry expertise</h3>
-          <p>We've worked with leading companies across various industries, delivering bespoke solutions that drive real results.</p>
-        </div>
-        <div class="card">
-          <h3>Customer-focused approach</h3>
-          <p>We prioritize your needs, providing customized solutions that meet your unique requirements.</p>
+  <section id="model">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-label"><span class="section-num">01</span><span class="eyebrow">Research model</span></div>
+        <div>
+          <h2>Five labs should not build the same thing five times.</h2>
+          <p class="section-intro">Frontier teams repeatedly face the same expensive infrastructure and post-training problems. We find the intersection, independently build the capability, and make the completed work available across research stacks.</p>
         </div>
       </div>
+      <div class="process-grid">
+        <article class="process-card">
+          <div class="code">input / confidential</div>
+          <h3>Capability discovery</h3>
+          <p>We speak with research teams about the environments, data, evals, and tooling their roadmaps keep demanding. No shared vendor details. No purchasing commitment.</p>
+        </article>
+        <article class="process-card">
+          <div class="code">process / independent</div>
+          <h3>Research execution</h3>
+          <p>Labelforge selects the program, builds the software, operates the workflows, and absorbs the infrastructure required to validate it.</p>
+        </article>
+        <article class="process-card">
+          <div class="code">output / deployable</div>
+          <h3>Completed R&amp;D</h3>
+          <p>Labs evaluate and license a finished capability: reusable artifacts, measured performance, integration code, and a clear account of what worked.</p>
+        </article>
+      </div>
     </div>
-    <div class="trusted-logo">
-      <img src="assets/human-logo.webp" width="836" height="199" alt="HUMAN logo" loading="lazy">
-    </div>
-  </div>
-</section>
+  </section>
 
+  <section class="dark-section" id="capabilities">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-label"><span class="section-num">02</span><span class="eyebrow dark">What we build</span></div>
+        <div>
+          <h2>The complete research loop—not another point solution.</h2>
+          <p class="section-intro">We combine research software, data operations, expert feedback, evaluation, compute, and deployment into one independently operated program.</p>
+        </div>
+      </div>
+      <div class="capability-grid">
+        <article class="capability">
+          <div class="capability-top"><span class="tag">environments / evals</span><span class="dot" aria-hidden="true"></span></div>
+          <h3>Tasks that produce useful signal</h3>
+          <p>Sandboxed environments, realistic multi-step tasks, tool integrations, evaluation harnesses, and measurable success criteria.</p>
+        </article>
+        <article class="capability">
+          <div class="capability-top"><span class="tag">graders / golden sets</span><span class="dot" aria-hidden="true"></span></div>
+          <h3>Rewards teams can trust</h3>
+          <p>Rubrics, expert adjudication, reference answers, deterministic checks, model graders, and calibration workflows.</p>
+        </article>
+        <article class="capability">
+          <div class="capability-top"><span class="tag">data / feedback</span><span class="dot" aria-hidden="true"></span></div>
+          <h3>Purpose-built research data</h3>
+          <p>Demonstrations, preferences, trajectories, critiques, corrections, edge cases, and the interfaces that produce them.</p>
+        </article>
+        <article class="capability">
+          <div class="capability-top"><span class="tag">research software</span><span class="dot" aria-hidden="true"></span></div>
+          <h3>Whatever the program requires</h3>
+          <p>Custom annotation systems, orchestration, experiment services, dashboards, APIs, deployment adapters, and internal research tools.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="deliverables">
+    <div class="wrap package">
+      <div class="package-copy">
+        <span class="eyebrow">A completed program</span>
+        <h2>Research your team can inspect, reproduce, and use.</h2>
+        <p>A capability program is delivered as a working system—not a slide deck, staffing plan, or pile of unstructured labels.</p>
+        <div class="cloud-band">
+          <strong>Execution follows the research.</strong>
+          <span>NO PRESCRIBED CLOUD<br>ACCELERATOR OR TOPOLOGY</span>
+        </div>
+      </div>
+      <div class="deliverables">
+        <div class="deliverable"><span class="n">01</span><div><strong>Research specification</strong><p>The target capability, hypotheses, task distribution, failure taxonomy, and acceptance criteria.</p></div></div>
+        <div class="deliverable"><span class="n">02</span><div><strong>Working software</strong><p>Environments, interfaces, orchestration, data pipelines, APIs, dashboards, and deployment code.</p></div></div>
+        <div class="deliverable"><span class="n">03</span><div><strong>Data and reference assets</strong><p>Completed datasets, golden sets, trajectories, rubrics, graders, and versioned provenance.</p></div></div>
+        <div class="deliverable"><span class="n">04</span><div><strong>Measured validation</strong><p>Baselines, ablations, quality results, failure analysis, and a reproducible evaluation harness.</p></div></div>
+        <div class="deliverable"><span class="n">05</span><div><strong>Integration path</strong><p>Adapters and documentation for deployment in our cloud, your cloud, or a customer-controlled research environment.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dark-section" id="research">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-label"><span class="section-num">03</span><span class="eyebrow dark">Research themes</span></div>
+        <div>
+          <h2>Roadmap candidates start with a shared bottleneck.</h2>
+          <p class="section-intro">Programs are selected after confidential discovery across multiple frontier teams. This is one candidate area where the software, data, and evaluation layers naturally meet.</p>
+        </div>
+      </div>
+      <article class="research-card">
+        <div class="research-main">
+          <span class="eyebrow dark">Candidate program</span>
+          <h3>Verifiable environments for long-horizon agents</h3>
+          <p>A portable research stack for creating realistic tasks, generating trajectories, measuring progress, and separating genuine capability from grader exploitation.</p>
+        </div>
+        <div class="research-aside">
+          <h3>Possible program assets</h3>
+          <ul>
+            <li>Sandboxed task environments</li>
+            <li>Tool and computer-use infrastructure</li>
+            <li>Task generators and curricula</li>
+            <li>Golden trajectories and edge cases</li>
+            <li>Deterministic and model-based graders</li>
+            <li>Human adjudication workflows</li>
+            <li>Multi-cloud evaluation runners</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="proof">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="section-label"><span class="section-num">04</span><span class="eyebrow">Execution history</span></div>
+        <div>
+          <h2>Built from real data infrastructure—not consulting theory.</h2>
+          <p class="section-intro">Our foundation is the difficult operational layer behind machine learning: turning ambiguous objectives into software, tasks, quality systems, and usable data.</p>
+        </div>
+      </div>
+      <div class="proof-grid">
+        <article class="proof-card">
+          <span class="eyebrow">HUMAN Protocol · Computer vision</span>
+          <h2>From labeling interfaces to model-in-the-loop workflows.</h2>
+          <p>Our team built custom labeling software and CVAT-based systems for distributed computer-vision work, including task orchestration, API integrations, quality-control workflows, and golden-set operations.</p>
+          <div class="proof-list">
+            <div class="proof-item">Custom labeling applications</div>
+            <div class="proof-item">CVAT integration and workflows</div>
+            <div class="proof-item">Task and worker orchestration</div>
+            <div class="proof-item">Model-assisted data production</div>
+            <div class="proof-item">Quality control and golden sets</div>
+            <div class="proof-item">Research-specific software</div>
+          </div>
+        </article>
+        <aside class="human-card">
+          <div>
+            <img src="assets/human-logo.webp" width="836" height="199" alt="HUMAN Protocol" loading="lazy">
+            <p>See the computer-vision systems, job types, and research workflows behind this work.</p>
+          </div>
+          <a class="text-link" href="https://cv.humanprotocol.org/" target="_blank" rel="noopener">View the work <span aria-hidden="true">↗</span></a>
+        </aside>
+      </div>
+    </div>
+  </section>
 </main>
 
 <section class="cta" id="contact">
-  <div class="wrap">
-    <span class="chip">action: contact</span>
-    <h2 style="margin-top:1.2rem">Let's transform your ML landscape</h2>
-    <p>Tell us about your project and we'll get back to you with a plan.</p>
-    <a class="btn" href="mailto:sales@labelforge.io">Request a consultation</a>
-    <p style="margin-top:1.6rem;margin-bottom:0"><a class="mail" href="mailto:sales@labelforge.io">sales@labelforge.io</a></p>
+  <div class="wrap cta-grid">
+    <div>
+      <span class="eyebrow dark">Confidential capability discovery</span>
+      <h2>What does your roadmap keep rebuilding?</h2>
+      <p>Tell us which post-training capability your team expects to need next. We use recurring needs across the field to inform an independent research roadmap.</p>
+    </div>
+    <div class="cta-aside">
+      <p>No purchasing commitment. Vendor input remains confidential. Completed programs are offered only after they have been built and validated.</p>
+      <a class="button light" href="mailto:research@labelforge.io?subject=Capability%20discovery">research@labelforge.io <span aria-hidden="true">→</span></a>
+    </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
-    <span>© 2026 Labelforge</span>
-    <a href="mailto:sales@labelforge.io">sales@labelforge.io</a>
+  <div class="wrap footer-grid">
+    <span>© 2026 Labelforge · Independent R&amp;D for frontier AI</span>
+    <a href="mailto:research@labelforge.io">research@labelforge.io</a>
   </div>
 </footer>
 
