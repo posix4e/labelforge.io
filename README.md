@@ -1,13 +1,12 @@
 # labelforge.io
 
-Static marketing site for Labelforge, an outsourced R&D company building the
-software, data, experiments, and infrastructure behind technically demanding
-programs. The site is served by GitHub Pages from the `main` branch of this
-repo.
+Static marketing site for Labelforge, a technical systems company building the
+reinforcement-learning, post-training, data, evaluation, software, and
+infrastructure layers behind better models. The site is served by GitHub Pages
+from the `main` branch of this repo.
 
 - `index.html` — the complete site (no build step and no JavaScript)
 - `CNAME` — sets the custom domain (labelforge.io) on GitHub Pages
-- `assets/og-rd-v2.png` — social preview for the outsourced-R&D positioning
 - `assets/human-logo.webp` — HUMAN Protocol case-study mark
 
 ## DNS and email (Cloudflare)
