@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Labelforge — Bespoke ML datasets, agents, and models</title>
+<meta name="description" content="Labelforge builds custom labeled datasets, intelligent agents, and cutting-edge ML models — accelerating insights and reducing time-to-value.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Labelforge — Bespoke ML Solutions">
+<meta property="og:description" content="Custom labeled datasets, intelligent agents, and cutting-edge models. Accelerate insights, reduce time-to-value.">
+<meta property="og:url" content="https://labelforge.io/">
+<meta property="og:image" content="https://labelforge.io/assets/og-image.jpg">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --canvas:#EDF0F5;
+  --panel:#FFFFFF;
+  --ink:#0D1B2E;
+  --muted:#51607A;
+  --line:#C7D0DE;
+  --magenta:#D6336C;
+  --blue:#1F7ACC;
+  --chip-bg:#0D1B2E;
+  --chip-ink:#EDF0F5;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Instrument Sans",system-ui,sans-serif;
+  background:var(--canvas);
+  color:var(--ink);
+  line-height:1.6;
+  font-size:1.0625rem;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--blue)}
+::selection{background:var(--magenta);color:#fff}
+
+.wrap{max-width:72rem;margin:0 auto;padding:0 1.5rem}
+
+h1,h2,h3{
+  font-family:"Archivo",system-ui,sans-serif;
+  font-stretch:118%;
+  line-height:1.08;
+  letter-spacing:-0.015em;
+}
+h1{font-weight:850;font-size:clamp(2.4rem,5.4vw,4.1rem)}
+h2{font-weight:800;font-size:clamp(1.7rem,3.4vw,2.5rem);letter-spacing:-0.01em}
+h3{font-weight:700;font-size:1.14rem;font-stretch:108%}
+
+.mono{font-family:"IBM Plex Mono",monospace}
+
+/* ---------- annotation chips: the signature device ---------- */
+.chip{
+  font-family:"IBM Plex Mono",monospace;
+  font-size:0.72rem;
+  font-weight:500;
+  letter-spacing:0.02em;
+  background:var(--chip-bg);
+  color:var(--chip-ink);
+  padding:0.22rem 0.55rem;
+  border-radius:3px;
+  display:inline-flex;
+  align-items:center;
+  gap:0.45rem;
+  width:fit-content;
+}
+.chip::before{
+  content:"";
+  width:0.55rem;height:0.55rem;
+  border-radius:2px;
+  background:var(--magenta);
+  flex:none;
+}
+.chip.b::before{background:var(--blue)}
+
+/* corner-bracketed bounding box around imagery */
+.bbox{position:relative;padding:1.1rem}
+.bbox img{border-radius:4px}
+.bbox::before,.bbox::after,
+.bbox .corner::before,.bbox .corner::after{
+  content:"";position:absolute;width:1.4rem;height:1.4rem;
+  border:0 solid var(--ink);
+}
+.bbox::before{top:0;left:0;border-top-width:3px;border-left-width:3px}
+.bbox::after{top:0;right:0;border-top-width:3px;border-right-width:3px}
+.bbox .corner::before{bottom:0;left:0;border-bottom-width:3px;border-left-width:3px}
+.bbox .corner::after{bottom:0;right:0;border-bottom-width:3px;border-right-width:3px}
+.bbox .tag{position:absolute;top:-0.72rem;left:1.1rem}
+
+/* ---------- header ---------- */
+header{
+  border-bottom:1px solid var(--line);
+  background:color-mix(in srgb,var(--canvas) 88%,#fff);
+  position:sticky;top:0;z-index:10;
+  backdrop-filter:blur(6px);
+}
+.nav{display:flex;align-items:center;gap:1.6rem;padding:0.85rem 1.5rem;max-width:72rem;margin:0 auto}
+.wordmark{
+  font-family:"Archivo",sans-serif;font-stretch:120%;font-weight:850;
+  font-size:1.18rem;letter-spacing:-0.01em;color:var(--ink);
+  text-decoration:none;display:flex;align-items:center;gap:0.5rem;margin-right:auto;
+}
+.wordmark svg{flex:none}
+.nav a.link{color:var(--muted);text-decoration:none;font-size:0.95rem;font-weight:500}
+.nav a.link:hover{color:var(--ink)}
+@media(max-width:44rem){.nav a.link{display:none}}
+
+.btn{
+  display:inline-block;
+  font-family:"Archivo",sans-serif;font-stretch:110%;font-weight:700;
+  font-size:0.98rem;
+  background:var(--magenta);color:#fff;text-decoration:none;
+  padding:0.72rem 1.35rem;border-radius:4px;
+  transition:background .15s;
+}
+.btn:hover{background:#B92A5C}
+.btn.small{padding:0.5rem 1rem;font-size:0.9rem}
+:is(a,button):focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+
+/* ---------- hero ---------- */
+.hero{padding:4.5rem 0 5rem}
+.hero .wrap{display:grid;grid-template-columns:1.15fr 0.85fr;gap:3.5rem;align-items:center}
+@media(max-width:56rem){.hero .wrap{grid-template-columns:1fr}.hero{padding:3rem 0}}
+.hero .kicker{margin-bottom:1.3rem}
+.hero p.lede{font-size:1.22rem;color:var(--muted);margin:1.4rem 0 2.1rem;max-width:34rem}
+.hero .accent{color:var(--magenta)}
+@media(prefers-reduced-motion:no-preference){
+  .hero .rise{animation:rise .6s ease-out both}
+  .hero .rise.d1{animation-delay:.08s}
+  .hero .rise.d2{animation-delay:.16s}
+  @keyframes rise{from{opacity:0;transform:translateY(0.7rem)}to{opacity:1;transform:none}}
+}
+
+/* ---------- sections ---------- */
+section{padding:4.2rem 0;scroll-margin-top:3.5rem}
+section .head{max-width:42rem;margin-bottom:2.6rem}
+section .head .chip{margin-bottom:1rem}
+section .head p{color:var(--muted);margin-top:0.8rem}
+.alt{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+.grid{display:grid;gap:1.4rem}
+.grid.c2{grid-template-columns:repeat(2,1fr)}
+.grid.c3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:56rem){.grid.c2,.grid.c3{grid-template-columns:1fr}}
+
+.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:1.7rem;
+  transition:border-color .15s, box-shadow .15s;
+}
+.alt .card{background:var(--canvas)}
+.card:hover{border-color:var(--ink);box-shadow:0 2px 0 0 var(--ink)}
+.card .chip{margin-bottom:1.1rem}
+.card h3{margin-bottom:0.55rem}
+.card p{color:var(--muted);font-size:1rem}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+@media(max-width:56rem){.split{grid-template-columns:1fr}}
+.split .stack{display:grid;gap:1.4rem}
+
+/* ---------- trusted ---------- */
+.trusted-logo{
+  background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  padding:2.2rem 2.6rem;display:flex;align-items:center;justify-content:center;
+}
+.trusted-logo img{width:15rem}
+
+/* ---------- CTA ---------- */
+.cta{background:var(--ink);color:var(--canvas);padding:5.5rem 0}
+.cta h2{color:#fff;max-width:38rem}
+.cta p{color:#9FB0C8;margin:1.2rem 0 2.2rem;max-width:34rem}
+.cta .chip{background:var(--canvas);color:var(--ink)}
+.cta a.mail{color:#9FB0C8;font-size:0.98rem}
+
+footer{padding:2.2rem 0;color:var(--muted);font-size:0.9rem}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="nav" aria-label="Main">
+    <a class="wordmark" href="#">
+      <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><rect x="1.5" y="1.5" width="17" height="17" rx="3" fill="none" stroke="#D6336C" stroke-width="3"/><rect x="6" y="6" width="8" height="8" rx="1.5" fill="#1F7ACC"/></svg>
+      Labelforge
+    </a>
+    <a class="link" href="#datasets">Datasets</a>
+    <a class="link" href="#agents">Agents</a>
+    <a class="link" href="#models">Models</a>
+    <a class="link" href="#velocity">Velocity</a>
+    <a class="btn small" href="mailto:sales@labelforge.io">Request a consultation</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="chip kicker rise">class: bespoke_ml · conf 0.99</span>
+      <h1 class="rise d1">Unleashing the power of <span class="accent">bespoke ML</span> solutions</h1>
+      <p class="lede rise d2">Transform your ML projects with Labelforge's custom solutions, accelerating insights and reducing time-to-value.</p>
+      <a class="btn rise d2" href="mailto:sales@labelforge.io">Request a consultation</a>
+    </div>
+    <div class="bbox">
+      <span class="corner"></span>
+      <span class="chip tag b">class: launch · conf 0.98</span>
+      <img src="assets/hero-rocket.webp" width="1152" height="864" alt="Stylized illustration of a rocket launching toward Earth orbit" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="workflow">
+  <div class="wrap">
+    <div class="head">
+      <span class="chip">label: workflow</span>
+      <h2>Streamline your ML workflow</h2>
+    </div>
+    <div class="grid c2">
+      <div class="card">
+        <span class="chip">label: datasets</span>
+        <h3>Bespoke labeled datasets</h3>
+        <p>From image annotation to text classification, we deliver tailored datasets that fit your unique requirements.</p>
+      </div>
+      <div class="card">
+        <span class="chip b">label: agents</span>
+        <h3>Intelligent agents</h3>
+        <p>Our agents power simulations, driving realistic interactions and boosting your model's accuracy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="datasets">
+  <div class="wrap">
+    <div class="head">
+      <span class="chip">label: datasets</span>
+      <h2>Bespoke labeled datasets, tailored for your needs</h2>
+    </div>
+    <div class="grid c3">
+      <div class="card">
+        <span class="chip">tag: quality</span>
+        <h3>High-quality annotations</h3>
+        <p>Our meticulous labeling ensures your models are trained on accurate and reliable data.</p>
+      </div>
+      <div class="card">
+        <span class="chip">tag: domain</span>
+        <h3>Domain expertise</h3>
+        <p>Leveraging industry-specific knowledge, we deliver datasets that are relevant and insightful.</p>
+      </div>
+      <div class="card">
+        <span class="chip">tag: scale</span>
+        <h3>Scalable solutions</h3>
+        <p>We handle projects of any size, ensuring your data is always ready for your next big step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="agents">
+  <div class="wrap split">
+    <div>
+      <div class="head" style="margin-bottom:1.8rem">
+        <span class="chip b">label: agents</span>
+        <h2>Intelligent agents: supercharge your simulations</h2>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3>Realistic interactions</h3>
+          <p>Our agents mimic real-world behavior, allowing you to test and refine your models in dynamic environments.</p>
+        </div>
+        <div class="card">
+          <h3>Enhanced data collection</h3>
+          <p>Agents gather valuable data during simulations, improving model performance and understanding.</p>
+        </div>
+        <div class="card">
+          <h3>Accelerated training</h3>
+          <p>By simulating complex scenarios, our agents speed up model training and reduce time-to-value.</p>
+        </div>
+      </div>
+    </div>
+    <div class="bbox">
+      <span class="corner"></span>
+      <span class="chip tag b">class: simulation · conf 0.97</span>
+      <img src="assets/agents-network.webp" width="864" height="1152" alt="Abstract network of glowing nodes radiating connections" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="models">
+  <div class="wrap">
+    <div class="head">
+      <span class="chip">label: models</span>
+      <h2>Cutting-edge models: accelerate your insights</h2>
+    </div>
+    <div class="grid c3">
+      <div class="card">
+        <span class="chip">tag: dl</span>
+        <h3>Deep learning</h3>
+        <p>Harness the power of neural networks to unlock complex patterns and make accurate predictions.</p>
+      </div>
+      <div class="card">
+        <span class="chip">tag: nlp</span>
+        <h3>Natural language processing</h3>
+        <p>Develop models that understand and interact with human language, enabling automated tasks and deeper insights.</p>
+      </div>
+      <div class="card">
+        <span class="chip">tag: cv</span>
+        <h3>Computer vision</h3>
+        <p>Empower your models to see and interpret images, enabling applications in robotics, healthcare, and more.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="velocity">
+  <div class="wrap">
+    <div class="head">
+      <span class="chip b">label: velocity</span>
+      <h2>Unparalleled velocity: reduce time-to-value</h2>
+    </div>
+    <div class="grid c3">
+      <div class="card">
+        <span class="chip b">tag: prototype</span>
+        <h3>Rapid prototyping</h3>
+        <p>Our agile approach helps you get your models up and running quickly, enabling rapid iteration and experimentation.</p>
+      </div>
+      <div class="card">
+        <span class="chip b">tag: process</span>
+        <h3>Streamlined processes</h3>
+        <p>We optimize your workflow, minimizing delays and maximizing efficiency throughout your ML journey.</p>
+      </div>
+      <div class="card">
+        <span class="chip b">tag: support</span>
+        <h3>Expert support</h3>
+        <p>Our dedicated team provides guidance and support every step of the way, ensuring a smooth and successful implementation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trusted">
+  <div class="wrap split">
+    <div>
+      <div class="head" style="margin-bottom:1.8rem">
+        <span class="chip">label: expertise</span>
+        <h2>Proven expertise, trusted by industry leaders</h2>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3>Industry expertise</h3>
+          <p>We've worked with leading companies across various industries, delivering bespoke solutions that drive real results.</p>
+        </div>
+        <div class="card">
+          <h3>Customer-focused approach</h3>
+          <p>We prioritize your needs, providing customized solutions that meet your unique requirements.</p>
+        </div>
+      </div>
+    </div>
+    <div class="trusted-logo">
+      <img src="assets/human-logo.webp" width="836" height="199" alt="HUMAN logo" loading="lazy">
+    </div>
+  </div>
+</section>
+
+</main>
+
+<section class="cta" id="contact">
+  <div class="wrap">
+    <span class="chip">action: contact</span>
+    <h2 style="margin-top:1.2rem">Let's transform your ML landscape</h2>
+    <p>Tell us about your project and we'll get back to you with a plan.</p>
+    <a class="btn" href="mailto:sales@labelforge.io">Request a consultation</a>
+    <p style="margin-top:1.6rem;margin-bottom:0"><a class="mail" href="mailto:sales@labelforge.io">sales@labelforge.io</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Labelforge</span>
+    <a href="mailto:sales@labelforge.io">sales@labelforge.io</a>
+  </div>
+</footer>
+
+</body>
+</html>
