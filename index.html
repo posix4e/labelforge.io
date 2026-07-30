@@ -3,18 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Labelforge — Shared R&amp;D for frontier AI</title>
-<meta name="description" content="Labelforge independently develops reusable post-training environments, datasets, graders, evaluation systems, and research software for frontier AI teams.">
+<title>Labelforge — Outsourced R&amp;D, built end to end</title>
+<meta name="description" content="Labelforge builds the software, data, experiments, and infrastructure behind ambitious R&amp;D programs across AI, medtech, advanced manufacturing, and other technical fields.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta property="og:title" content="Labelforge — Shared R&amp;D for frontier AI">
-<meta property="og:description" content="Outsource the R&amp;D everyone needs. Labelforge builds reusable post-training capabilities for frontier AI teams.">
+<meta property="og:title" content="Labelforge — Outsourced R&amp;D, built end to end">
+<meta property="og:description" content="Expand what your R&amp;D team can deliver. Labelforge takes technical programs from open problem to validated capability.">
 <meta property="og:url" content="https://labelforge.io/">
-<meta property="og:image" content="https://labelforge.io/assets/og-rd.png">
+<meta property="og:image" content="https://labelforge.io/assets/og-rd-v2.png">
+<meta property="og:image:width" content="1731">
+<meta property="og:image:height" content="909">
+<meta property="og:image:alt" content="Labelforge — Outsourced R&amp;D, built end to end">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Labelforge — Shared R&amp;D for frontier AI">
-<meta name="twitter:description" content="Independent research programs for environments, data, graders, evals, and the software behind them.">
-<meta name="twitter:image" content="https://labelforge.io/assets/og-rd.png">
+<meta name="twitter:title" content="Labelforge — Outsourced R&amp;D, built end to end">
+<meta name="twitter:description" content="Software, data, experiments, and infrastructure for technically demanding R&amp;D programs.">
+<meta name="twitter:image" content="https://labelforge.io/assets/og-rd-v2.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet">
@@ -320,21 +323,24 @@ section{padding:5.5rem 0;scroll-margin-top:4rem}
 .cloud-band strong{font-family:"Archivo",sans-serif;font-stretch:112%;font-size:1.08rem}
 .cloud-band span{font-family:"IBM Plex Mono",monospace;font-size:.7rem;text-align:right}
 
-.research-card{
+.sector-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem}
+.sector-card{
   border:1px solid #27404B;
-  display:grid;
-  grid-template-columns:minmax(0,1.18fr) minmax(19rem,.82fr);
   background:var(--deep-2);
+  padding:2rem;
+  min-height:14rem;
 }
-.research-main{padding:2.3rem}
-.research-main .eyebrow{margin-bottom:1.2rem}
-.research-main h3{font-size:clamp(1.8rem,3vw,2.8rem);max-width:18ch;margin-bottom:1rem}
-.research-main>p{font-size:1.05rem;max-width:40rem}
-.research-aside{padding:2.3rem;border-left:1px solid #27404B}
-.research-aside h3{font-size:.85rem;font-family:"IBM Plex Mono",monospace;letter-spacing:.05em;text-transform:uppercase;color:var(--aqua);margin-bottom:1rem}
-.research-aside ul{list-style:none;display:grid;gap:.8rem}
-.research-aside li{display:flex;gap:.65rem;color:#D9E2E5;font-size:.93rem}
-.research-aside li::before{content:"↳";color:var(--lime);font-family:"IBM Plex Mono",monospace}
+.sector-card .code{
+  display:block;
+  color:var(--aqua);
+  font-family:"IBM Plex Mono",monospace;
+  font-size:.69rem;
+  letter-spacing:.05em;
+  margin-bottom:3.2rem;
+  text-transform:uppercase;
+}
+.sector-card h3{font-size:1.4rem;margin-bottom:.65rem}
+.sector-card p{font-size:.95rem}
 
 .proof-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,.72fr);gap:1rem}
 .proof-card{border:1px solid var(--line);background:var(--panel);padding:2rem}
@@ -368,7 +374,7 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
 .footer-grid a{text-underline-offset:.2em}
 
 @media(max-width:62rem){
-  .hero-grid,.package,.research-card,.proof-grid,.cta-grid{grid-template-columns:1fr}
+  .hero-grid,.package,.proof-grid,.cta-grid{grid-template-columns:1fr}
   .hero{padding-top:4rem}
   .manifest{max-width:40rem}
   .section-head{grid-template-columns:1fr;gap:1rem}
@@ -377,7 +383,6 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
   .process-card:last-child{border-bottom:0}
   .process-card .code{margin-bottom:2rem}
   .package-copy{position:static}
-  .research-aside{border-left:0;border-top:1px solid #27404B}
   .cta-aside{border-left:0;border-top:1px solid rgba(255,255,255,.3);padding:1.5rem 0 0}
 }
 @media(max-width:44rem){
@@ -393,10 +398,10 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
   .signal{border-right:0;border-bottom:1px solid var(--line);padding-left:0}
   .signal:last-child{border-bottom:0}
   section{padding:4rem 0}
-  .capability-grid,.proof-list{grid-template-columns:1fr}
+  .capability-grid,.sector-grid,.proof-list{grid-template-columns:1fr}
   .cloud-band{align-items:flex-start;flex-direction:column}
   .cloud-band span{text-align:left}
-  .research-main,.research-aside,.proof-card,.human-card{padding:1.4rem}
+  .sector-card,.proof-card,.human-card{padding:1.4rem}
 }
 @media(prefers-reduced-motion:no-preference){
   .hero-copy>*{animation:rise .55s ease-out both}
@@ -413,10 +418,11 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
 <header>
   <nav class="nav" aria-label="Main navigation">
     <a class="wordmark" href="#top"><span class="mark" aria-hidden="true"></span>Labelforge</a>
-    <a class="nav-link" href="#model">Research model</a>
+    <a class="nav-link" href="#model">How we work</a>
     <a class="nav-link" href="#capabilities">Capabilities</a>
+    <a class="nav-link" href="#fields">Fields</a>
     <a class="nav-link" href="#proof">Proof</a>
-    <a class="button small" href="mailto:research@labelforge.io?subject=Capability%20discovery">Share a research gap</a>
+    <a class="button small" href="mailto:research@labelforge.io?subject=R%26D%20inquiry">Discuss a program</a>
   </nav>
 </header>
 
@@ -424,21 +430,21 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
   <section class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">Independent R&amp;D · Frontier AI</span>
-        <h1>Outsource the R&amp;D <span class="accent">everyone needs.</span></h1>
-        <p class="hero-lede">Labelforge identifies shared bottlenecks across frontier-model teams and independently develops the environments, datasets, graders, and software required to solve them.</p>
+        <span class="eyebrow">Outsourced R&amp;D · End-to-end execution</span>
+        <h1>Expand what your R&amp;D team can <span class="accent">deliver.</span></h1>
+        <p class="hero-lede">Labelforge builds the software, data, experiments, and infrastructure behind ambitious R&amp;D programs—inside the roadmap, cloud, and technical stack you already use.</p>
         <div class="hero-actions">
-          <a class="button" href="mailto:research@labelforge.io?subject=Capability%20discovery">Join capability discovery <span aria-hidden="true">→</span></a>
-          <a class="button secondary" href="#model">How programs work</a>
+          <a class="button" href="mailto:research@labelforge.io?subject=R%26D%20inquiry">Discuss an R&amp;D program <span aria-hidden="true">→</span></a>
+          <a class="button secondary" href="#model">How we work</a>
         </div>
       </div>
       <aside class="manifest" aria-label="Research program lifecycle">
-        <div class="manifest-head"><span>program.lifecycle</span><span class="status">independent</span></div>
+        <div class="manifest-head"><span>program.lifecycle</span><span class="status">integrated</span></div>
         <ol>
-          <li><span class="step">01</span><div><strong>Discover</strong><p>Confidential conversations surface recurring research bottlenecks.</p></div></li>
-          <li><span class="step">02</span><div><strong>Select</strong><p>We choose a general capability with value across multiple labs.</p></div></li>
-          <li><span class="step">03</span><div><strong>Build</strong><p>Labelforge funds, operates, and validates the research program.</p></div></li>
-          <li><span class="step">04</span><div><strong>Deploy</strong><p>Completed R&amp;D integrates into each lab’s preferred stack.</p></div></li>
+          <li><span class="step">01</span><div><strong>Define</strong><p>Clarify the technical unknown, constraints, and evidence required.</p></div></li>
+          <li><span class="step">02</span><div><strong>Engineer</strong><p>Build the software, data systems, experiments, and infrastructure.</p></div></li>
+          <li><span class="step">03</span><div><strong>Validate</strong><p>Test performance, failure modes, and reproducibility against explicit measures.</p></div></li>
+          <li><span class="step">04</span><div><strong>Integrate</strong><p>Transfer the working capability into your existing stack and workflow.</p></div></li>
         </ol>
       </aside>
     </div>
@@ -446,36 +452,36 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
 
   <div class="signal-strip" aria-label="Program advantages">
     <div class="wrap signal-grid">
-      <div class="signal"><strong>Shared research burden</strong><span>stop rebuilding the same capability</span></div>
-      <div class="signal"><strong>Complete execution layer</strong><span>software · operations · compute</span></div>
-      <div class="signal"><strong>Infrastructure neutral</strong><span>our cloud · your cloud · controlled stack</span></div>
+      <div class="signal"><strong>Extend the team</strong><span>keep your roadmap and operating model</span></div>
+      <div class="signal"><strong>Complete execution layer</strong><span>software · data · experiments · infrastructure</span></div>
+      <div class="signal"><strong>Fits your environment</strong><span>our cloud · your cloud · controlled stack</span></div>
     </div>
   </div>
 
   <section id="model">
     <div class="wrap">
       <div class="section-head">
-        <div class="section-label"><span class="section-num">01</span><span class="eyebrow">Research model</span></div>
+        <div class="section-label"><span class="section-num">01</span><span class="eyebrow">How we work</span></div>
         <div>
-          <h2>Five labs should not build the same thing five times.</h2>
-          <p class="section-intro">Frontier teams repeatedly face the same expensive infrastructure and post-training problems. We find the intersection, independently build the capability, and make the completed work available across research stacks.</p>
+          <h2>Your roadmap stays intact. Its execution capacity expands.</h2>
+          <p class="section-intro">We work as an extension of the team already in place. You keep the priorities, process, and environment; Labelforge owns the technical path from open question to validated capability.</p>
         </div>
       </div>
       <div class="process-grid">
         <article class="process-card">
-          <div class="code">input / confidential</div>
-          <h3>Capability discovery</h3>
-          <p>We speak with research teams about the environments, data, evals, and tooling their roadmaps keep demanding. No shared vendor details. No purchasing commitment.</p>
+          <div class="code">input / open problem</div>
+          <h3>Start where standard tools stop</h3>
+          <p>Bring us the capability your roadmap needs but no off-the-shelf product can provide. We define the unknowns, constraints, and proof required with your team.</p>
         </article>
         <article class="process-card">
-          <div class="code">process / independent</div>
-          <h3>Research execution</h3>
-          <p>Labelforge selects the program, builds the software, operates the workflows, and absorbs the infrastructure required to validate it.</p>
+          <div class="code">process / end to end</div>
+          <h3>One integrated execution team</h3>
+          <p>We coordinate software, data, experiments, expert workflows, compute, and networking as one program—without introducing a new operating model for your organization.</p>
         </article>
         <article class="process-card">
-          <div class="code">output / deployable</div>
-          <h3>Completed R&amp;D</h3>
-          <p>Labs evaluate and license a finished capability: reusable artifacts, measured performance, integration code, and a clear account of what worked.</p>
+          <div class="code">output / usable evidence</div>
+          <h3>A working capability</h3>
+          <p>Your team receives an inspectable system, research assets, measured results, integration code, and a clear account of what worked, what failed, and what comes next.</p>
         </article>
       </div>
     </div>
@@ -486,30 +492,30 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
       <div class="section-head">
         <div class="section-label"><span class="section-num">02</span><span class="eyebrow dark">What we build</span></div>
         <div>
-          <h2>The complete research loop—not another point solution.</h2>
-          <p class="section-intro">We combine research software, data operations, expert feedback, evaluation, compute, and deployment into one independently operated program.</p>
+          <h2>Software, data, experiments, and infrastructure in one program.</h2>
+          <p class="section-intro">Difficult R&amp;D fails at the seams between disciplines. We take ownership across those seams while fitting the systems and decision process your team already uses.</p>
         </div>
       </div>
       <div class="capability-grid">
         <article class="capability">
-          <div class="capability-top"><span class="tag">environments / evals</span><span class="dot" aria-hidden="true"></span></div>
-          <h3>Tasks that produce useful signal</h3>
-          <p>Sandboxed environments, realistic multi-step tasks, tool integrations, evaluation harnesses, and measurable success criteria.</p>
-        </article>
-        <article class="capability">
-          <div class="capability-top"><span class="tag">graders / golden sets</span><span class="dot" aria-hidden="true"></span></div>
-          <h3>Rewards teams can trust</h3>
-          <p>Rubrics, expert adjudication, reference answers, deterministic checks, model graders, and calibration workflows.</p>
-        </article>
-        <article class="capability">
-          <div class="capability-top"><span class="tag">data / feedback</span><span class="dot" aria-hidden="true"></span></div>
-          <h3>Purpose-built research data</h3>
-          <p>Demonstrations, preferences, trajectories, critiques, corrections, edge cases, and the interfaces that produce them.</p>
-        </article>
-        <article class="capability">
           <div class="capability-top"><span class="tag">research software</span><span class="dot" aria-hidden="true"></span></div>
-          <h3>Whatever the program requires</h3>
-          <p>Custom annotation systems, orchestration, experiment services, dashboards, APIs, deployment adapters, and internal research tools.</p>
+          <h3>Software built around the question</h3>
+          <p>Custom interfaces, experiment services, orchestration, simulation, dashboards, APIs, and internal tools designed for the program—not adapted after the fact.</p>
+        </article>
+        <article class="capability">
+          <div class="capability-top"><span class="tag">data / ground truth</span><span class="dot" aria-hidden="true"></span></div>
+          <h3>Evidence the program can trust</h3>
+          <p>Collection systems, expert workflows, annotation, provenance, quality control, golden sets, reference standards, and calibration.</p>
+        </article>
+        <article class="capability">
+          <div class="capability-top"><span class="tag">models / experiments</span><span class="dot" aria-hidden="true"></span></div>
+          <h3>Experiments that resolve uncertainty</h3>
+          <p>Modeling, training, computer vision, baselines, ablations, evaluation harnesses, and experiment designs tied to explicit decisions.</p>
+        </article>
+        <article class="capability">
+          <div class="capability-top"><span class="tag">validation / deployment</span><span class="dot" aria-hidden="true"></span></div>
+          <h3>Proof that transfers into practice</h3>
+          <p>Failure analysis, reproducibility, deployment adapters, documentation, and integration into our cloud, your cloud, or a controlled environment.</p>
         </article>
       </div>
     </div>
@@ -520,50 +526,53 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
       <div class="package-copy">
         <span class="eyebrow">A completed program</span>
         <h2>Research your team can inspect, reproduce, and use.</h2>
-        <p>A capability program is delivered as a working system—not a slide deck, staffing plan, or pile of unstructured labels.</p>
+        <p>A capability program is delivered as a working system—not a slide deck, staffing plan, or isolated proof of concept.</p>
         <div class="cloud-band">
           <strong>Execution follows the research.</strong>
           <span>NO PRESCRIBED CLOUD<br>ACCELERATOR OR TOPOLOGY</span>
         </div>
       </div>
       <div class="deliverables">
-        <div class="deliverable"><span class="n">01</span><div><strong>Research specification</strong><p>The target capability, hypotheses, task distribution, failure taxonomy, and acceptance criteria.</p></div></div>
-        <div class="deliverable"><span class="n">02</span><div><strong>Working software</strong><p>Environments, interfaces, orchestration, data pipelines, APIs, dashboards, and deployment code.</p></div></div>
-        <div class="deliverable"><span class="n">03</span><div><strong>Data and reference assets</strong><p>Completed datasets, golden sets, trajectories, rubrics, graders, and versioned provenance.</p></div></div>
+        <div class="deliverable"><span class="n">01</span><div><strong>Research specification</strong><p>The target capability, hypotheses, variables, constraints, failure taxonomy, and acceptance criteria.</p></div></div>
+        <div class="deliverable"><span class="n">02</span><div><strong>Working software</strong><p>Interfaces, orchestration, experiment services, data pipelines, APIs, dashboards, and deployment code.</p></div></div>
+        <div class="deliverable"><span class="n">03</span><div><strong>Data and reference assets</strong><p>Datasets, golden sets, collection protocols, evaluation standards, and versioned provenance.</p></div></div>
         <div class="deliverable"><span class="n">04</span><div><strong>Measured validation</strong><p>Baselines, ablations, quality results, failure analysis, and a reproducible evaluation harness.</p></div></div>
         <div class="deliverable"><span class="n">05</span><div><strong>Integration path</strong><p>Adapters and documentation for deployment in our cloud, your cloud, or a customer-controlled research environment.</p></div></div>
       </div>
     </div>
   </section>
 
-  <section class="dark-section" id="research">
+  <section class="dark-section" id="fields">
     <div class="wrap">
       <div class="section-head">
-        <div class="section-label"><span class="section-num">03</span><span class="eyebrow dark">Research themes</span></div>
+        <div class="section-label"><span class="section-num">03</span><span class="eyebrow dark">Where we work</span></div>
         <div>
-          <h2>Roadmap candidates start with a shared bottleneck.</h2>
-          <p class="section-intro">Programs are selected after confidential discovery across multiple frontier teams. This is one candidate area where the software, data, and evaluation layers naturally meet.</p>
+          <h2>Built for technically demanding R&amp;D.</h2>
+          <p class="section-intro">We are most useful where progress requires software, data, experimentation, and infrastructure to move together—and where the finished capability must fit an existing technical organization.</p>
         </div>
       </div>
-      <article class="research-card">
-        <div class="research-main">
-          <span class="eyebrow dark">Candidate program</span>
-          <h3>Verifiable environments for long-horizon agents</h3>
-          <p>A portable research stack for creating realistic tasks, generating trajectories, measuring progress, and separating genuine capability from grader exploitation.</p>
-        </div>
-        <div class="research-aside">
-          <h3>Possible program assets</h3>
-          <ul>
-            <li>Sandboxed task environments</li>
-            <li>Tool and computer-use infrastructure</li>
-            <li>Task generators and curricula</li>
-            <li>Golden trajectories and edge cases</li>
-            <li>Deterministic and model-based graders</li>
-            <li>Human adjudication workflows</li>
-            <li>Multi-cloud evaluation runners</li>
-          </ul>
-        </div>
-      </article>
+      <div class="sector-grid">
+        <article class="sector-card">
+          <span class="code">ai / autonomous systems</span>
+          <h3>AI and computer vision</h3>
+          <p>Research systems for post-training, agents, evaluation, reinforcement learning, simulation, human feedback, and vision models.</p>
+        </article>
+        <article class="sector-card">
+          <span class="code">health / scientific systems</span>
+          <h3>Medtech and life sciences</h3>
+          <p>Research software for scientific imaging, expert annotation, measurement workflows, validation datasets, and evidence generation.</p>
+        </article>
+        <article class="sector-card">
+          <span class="code">physical / industrial systems</span>
+          <h3>Advanced manufacturing</h3>
+          <p>Research programs for visual inspection, process data, robotics, simulation, optimization, and intelligent automation.</p>
+        </article>
+        <article class="sector-card">
+          <span class="code">custom / data-intensive systems</span>
+          <h3>Data-intensive research</h3>
+          <p>Custom interfaces, collection systems, expert operations, quality programs, golden sets, and research-specific infrastructure.</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -572,8 +581,8 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
       <div class="section-head">
         <div class="section-label"><span class="section-num">04</span><span class="eyebrow">Execution history</span></div>
         <div>
-          <h2>Built from real data infrastructure—not consulting theory.</h2>
-          <p class="section-intro">Our foundation is the difficult operational layer behind machine learning: turning ambiguous objectives into software, tasks, quality systems, and usable data.</p>
+          <h2>Execution experience from the hard operational layer.</h2>
+          <p class="section-intro">Our foundation is turning ambiguous technical objectives into software, tasks, quality systems, and usable data—the layer where research plans become working systems.</p>
         </div>
       </div>
       <div class="proof-grid">
@@ -605,20 +614,20 @@ footer{padding:2rem 0;border-top:1px solid var(--line);background:var(--panel)}
 <section class="cta" id="contact">
   <div class="wrap cta-grid">
     <div>
-      <span class="eyebrow dark">Confidential capability discovery</span>
-      <h2>What does your roadmap keep rebuilding?</h2>
-      <p>Tell us which post-training capability your team expects to need next. We use recurring needs across the field to inform an independent research roadmap.</p>
+      <span class="eyebrow dark">Outsourced R&amp;D</span>
+      <h2>What capability is missing from your roadmap?</h2>
+      <p>Bring us a technical problem that requires software, data, experimentation, and infrastructure to move together. We will shape a program around the priorities already in place.</p>
     </div>
     <div class="cta-aside">
-      <p>No purchasing commitment. Vendor input remains confidential. Completed programs are offered only after they have been built and validated.</p>
-      <a class="button light" href="mailto:research@labelforge.io?subject=Capability%20discovery">research@labelforge.io <span aria-hidden="true">→</span></a>
+      <p>Work can run in our cloud, your cloud, or a controlled environment. Your team keeps its existing tools, governance, and decision process.</p>
+      <a class="button light" href="mailto:research@labelforge.io?subject=R%26D%20inquiry">research@labelforge.io <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap footer-grid">
-    <span>© 2026 Labelforge · Independent R&amp;D for frontier AI</span>
+    <span>© 2026 Labelforge · Outsourced R&amp;D for ambitious technical teams</span>
     <a href="mailto:research@labelforge.io">research@labelforge.io</a>
   </div>
 </footer>
